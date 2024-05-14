@@ -7,6 +7,8 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument
 from MainWindow import Ui_MainWindow
 
+from SytaxHighlight import MarkdownHighlighter
+
 
 class MenuBarActions():
     def __init__(self):
@@ -23,6 +25,14 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # Markdown 语法高亮
+        self.highlighter = MarkdownHighlighter.MarkdownHighlighter(self.ui.textEdit)
+
+        self.model = QFileSystemModel()
+        self.model.setRootPath(QDir.currentPath())
+        self.ui.treeView.setModel(self.model)
+        self.ui.treeView.setRootIndex(self.model.index(self.model.rootPath()))
 
         self.actions = MenuBarActions()
 
@@ -229,6 +239,7 @@ class MainWindow(QMainWindow):
         相关
         """
         QMessageBox.about(self, "About", "This is a software create by BFmHNO3.\n\nVersion: 1.0.0")
+
 
 
 

@@ -23,7 +23,7 @@
    <string>Mast</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -40,12 +40,33 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="QTreeView" name="treeView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>终端更纱黑体-简 Nerd</family>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTextEdit" name="textEdit">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>终端更纱黑体-简 Nerd</family>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>

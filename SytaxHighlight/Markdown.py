@@ -1,6 +1,9 @@
 from PySide6.QtGui import QSyntaxHighlighter, QTextCharFormat, QColor, QFont, QBrush, QPalette, QTextCursor, QTextLayout
 import re
 
+# from PySide6.QtWidgets import QApplication, QTextEdit
+# import sys
+
 class MarkdownHighlighter(QSyntaxHighlighter):
 
     MARKDOWN_KEYS_REGEX = {
@@ -27,7 +30,7 @@ class MarkdownHighlighter(QSyntaxHighlighter):
     def __init__(self, parent):
         QSyntaxHighlighter.__init__(self, parent)
         self.parent = parent
-        self.parent.setTabStopWidth(self.parent.fontMetrics().width(' ')*8)
+        self.parent.setTabStopDistance(self.parent.fontMetrics().horizontalAdvance(' ')*8)
 
         self.defaultTheme =  {"background-color":"#d7d7d7", "color":"#191970", "bold": {"color":"#859900", "font-weight":"bold", "font-style":"normal"}, "emphasis": {"color":"#b58900", "font-weight":"bold", "font-style":"italic"}, "link": {"color":"#cb4b16", "font-weight":"normal", "font-style":"normal"}, "image": {"color":"#cb4b16", "font-weight":"normal", "font-style":"normal"}, "header": {"color":"#2aa198", "font-weight":"bold", "font-style":"normal"}, "unorderedlist": {"color":"#dc322f", "font-weight":"normal", "font-style":"normal"}, "orderedlist": {"color":"#dc322f", "font-weight":"normal", "font-style":"normal"}, "blockquote": {"color":"#dc322f", "font-weight":"normal", "font-style":"normal"}, "codespan": {"color":"#dc322f", "font-weight":"normal", "font-style":"normal"}, "codeblock": {"color":"#ff9900", "font-weight":"normal", "font-style":"normal"}, "line": {"color":"#2aa198", "font-weight":"normal", "font-style":"normal"}, "html": {"color":"#c000c0", "font-weight":"normal", "font-style":"normal"}}
         self.setTheme(self.defaultTheme)
@@ -316,3 +319,23 @@ class MarkdownHighlighter(QSyntaxHighlighter):
     def highlightHtml(self, text):
         for mo in re.finditer(self.MARKDOWN_KEYS_REGEX['Html'], text):
             self.setFormat(mo.start(), mo.end() - mo.start(), self.MARKDOWN_KWS_FORMAT['HTML'])
+
+
+# def create_text_edit_with_highlighting():
+#     # 创建应用实例
+#     app = QApplication(sys.argv)
+
+#     # 创建 QTextEdit 实例
+#     text_edit = QTextEdit()
+
+#     # 创建 MarkdownHighlighter 实例并将其应用到 QTextEdit 实例上
+#     highlighter = MarkdownHighlighter(text_edit)
+
+#     # 显示 QTextEdit 实例
+#     text_edit.show()
+
+#     # 运行应用
+#     sys.exit(app.exec_())
+
+# if __name__ == "__main__":
+#     create_text_edit_with_highlighting()
