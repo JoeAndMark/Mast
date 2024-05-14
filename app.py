@@ -7,8 +7,6 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument
 from MainWindow import Ui_MainWindow
 
-from SytaxHighlight import MarkdownHighlighter
-
 
 class MenuBarActions():
     def __init__(self):
@@ -26,8 +24,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # Markdown 语法高亮
-        self.highlighter = MarkdownHighlighter.MarkdownHighlighter(self.ui.textEdit)
+        # # Markdown 语法高亮
+        # self.highlighter = MarkdownHighlighter.MarkdownHighlighter(self.ui.textEdit)
 
         self.model = QFileSystemModel()
         self.model.setRootPath(QDir.currentPath())
@@ -62,6 +60,9 @@ class MainWindow(QMainWindow):
 
         self.ui.helpAbout.triggered.connect(self.helpAbout)
         
+        # 测试加载pdf
+        filePath = os.path.abspath("test.pdf")
+        self.ui.webEngineView.load(QUrl.fromLocalFile(r"E:\Downloads\GitRepo\Github\Mast\test.pdf"))
     
     def fileOpen(self):
         file, ok = QFileDialog.getOpenFileName(self, "Open", "E:\Downloads\GitRepo\Github\Mast", \

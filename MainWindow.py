@@ -16,9 +16,11 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QHeaderView,
-    QMainWindow, QMenu, QMenuBar, QSizePolicy,
-    QStatusBar, QTextEdit, QTreeView, QWidget)
+from PySide6.QtWebEngineWidgets import QWebEngineView
+from PySide6.QtWidgets import (QApplication, QFrame, QHeaderView, QMainWindow,
+    QMenu, QMenuBar, QSizePolicy, QSplitter,
+    QStatusBar, QTextEdit, QTreeView, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -89,38 +91,44 @@ class Ui_MainWindow(object):
         self.complileTypst.setObjectName(u"complileTypst")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayout = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.treeView = QTreeView(self.centralwidget)
+        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.splitter = QSplitter(self.centralwidget)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Horizontal)
+        self.treeView = QTreeView(self.splitter)
         self.treeView.setObjectName(u"treeView")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.treeView.sizePolicy().hasHeightForWidth())
         self.treeView.setSizePolicy(sizePolicy1)
+        self.treeView.setMinimumSize(QSize(0, 0))
         font = QFont()
         font.setFamilies([u"\u7ec8\u7aef\u66f4\u7eb1\u9ed1\u4f53-\u7b80 Nerd"])
         self.treeView.setFont(font)
-
-        self.horizontalLayout.addWidget(self.treeView)
-
-        self.textEdit = QTextEdit(self.centralwidget)
+        self.treeView.setFrameShape(QFrame.StyledPanel)
+        self.treeView.setFrameShadow(QFrame.Plain)
+        self.treeView.setLineWidth(0)
+        self.splitter.addWidget(self.treeView)
+        self.textEdit = QTextEdit(self.splitter)
         self.textEdit.setObjectName(u"textEdit")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
-        self.textEdit.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
+        self.textEdit.setSizePolicy(sizePolicy1)
         font1 = QFont()
         font1.setFamilies([u"\u7ec8\u7aef\u66f4\u7eb1\u9ed1\u4f53-\u7b80 Nerd"])
         font1.setPointSize(14)
         self.textEdit.setFont(font1)
         self.textEdit.setFrameShape(QFrame.NoFrame)
         self.textEdit.setLineWidth(0)
+        self.splitter.addWidget(self.textEdit)
+        self.webEngineView = QWebEngineView(self.splitter)
+        self.webEngineView.setObjectName(u"webEngineView")
+        self.webEngineView.setUrl(QUrl(u"about:blank"))
+        self.splitter.addWidget(self.webEngineView)
 
-        self.horizontalLayout.addWidget(self.textEdit)
+        self.verticalLayout.addWidget(self.splitter)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)

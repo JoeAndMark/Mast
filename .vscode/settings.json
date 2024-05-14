@@ -1,2 +1,6 @@
 {
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#FF0000",
+        "terminalCursor.foreground": "#FF0000"
+    }
 }
