@@ -5,16 +5,6 @@ import shutil
 from PySide6.QtCore import *
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument
-from MainWindow import Ui_MainWindow
-
-
-class MenuBarActions():
-    def __init__(self):
-        pass
-
-    def fileOpen(self):
-        file, ok = QFileDialog.getOpenFileName(self, "Open", "C:/", "Markdown Files(*.md);;Text Files (*.txt);;LaTeX Files (*.tex);;Typst Files (*.typ)")
-        # self.ui.statusbar.showMessage(file) # 在状态栏中显示文件地址
 
 
 class MainWindow(QMainWindow):
