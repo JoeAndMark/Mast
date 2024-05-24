@@ -1,1 +1,0 @@
-D:\ProgramData\miniconda3\envs\gui\Scripts\pyside6-uic.exe -o MainWindow.py MainWindow.ui
