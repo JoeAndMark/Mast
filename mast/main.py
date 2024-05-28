@@ -19,6 +19,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.model = QFileSystemModel()
 
+        # 设置 Splitter 控件的初始大小
+        self.ui.splitter.setSizes([200, 800])
+
         # 与文件操作有关的全局变量
         self.supportFileType = """
             Text Files (*.txt);;
@@ -74,7 +77,7 @@ class MainWindow(QMainWindow):
         self.ui.textEdit.textChanged.connect(self._fileIsChanged)
 
         self.ui.compileLaTeX.triggered.connect(self.compileLaTeX)
-        # self.ui.compileTypst.triggered.connect(self.compileTypst) # 拼写错误
+        self.ui.compileTypst.triggered.connect(self.compileTypst)
 
         self.ui.helpAbout.triggered.connect(self.helpAbout)
 
