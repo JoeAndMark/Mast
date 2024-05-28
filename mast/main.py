@@ -1,19 +1,25 @@
 from PySide6.QtCore import QDir, QUrl
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument
+
 import os
 import shutil
 import subprocess
+
 from mast.gui import Ui_MainWindow
+from markdown import markdown
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        # 属性
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.model = QFileSystemModel()
 
+        # 与文件操作有关的全局变量
         self.supportFileType = """
             Text Files (*.txt);;
             Markdown Files (*.md);;
@@ -23,11 +29,11 @@ class MainWindow(QMainWindow):
 
         self.isSaved = True # 标志位，用来判断文本框中的文本是否保存，默认已经保存
 
-
         self.defaultFileDir = os.path.expanduser("~\\Documents") # 默认文件夹
         self.currentFileDir = self.defaultFileDir
         self.currentFilePath = None # 当前文件的路径，默认没有打开文件，所以路径为 None
 
+        # 展示文件目录结构
         self.model.setRootPath(self.currentFileDir)
         self.ui.treeView.setModel(self.model)
         self.ui.treeView.setRootIndex(self.model.index(self.model.rootPath()))
@@ -35,11 +41,15 @@ class MainWindow(QMainWindow):
         self.ui.treeView.setColumnHidden(2, True)
         self.ui.treeView.setColumnHidden(3, True)
 
-        self.ui.treeView.doubleClicked.connect(self.treeViewDoubleClicked)
+        # 渲染窗口
+        # self.ui.webEngineView.
 
         self.connectSlot()
 
     def connectSlot(self):
+        """
+        连接信号与槽函数
+        """
         self.ui.fileOpen.triggered.connect(self.fileOpen)
         self.ui.fileNew.triggered.connect(self.fileNew)
         self.ui.fileOpenFolder.triggered.connect(self.fileOpenFolder)
@@ -61,29 +71,42 @@ class MainWindow(QMainWindow):
         self.ui.editJumpToLineEnd.triggered.connect(self.editJumpToLineEnd)
         self.ui.editReplace.triggered.connect(self.editReplace)
 
-        self.ui.textEdit.textChanged.connect(self._textChanged)
+        self.ui.textEdit.textChanged.connect(self._fileIsChanged)
 
         self.ui.compileLaTeX.triggered.connect(self.compileLaTeX)
         # self.ui.compileTypst.triggered.connect(self.compileTypst) # 拼写错误
 
         self.ui.helpAbout.triggered.connect(self.helpAbout)
 
+        self.ui.treeView.doubleClicked.connect(self.treeViewDoubleClicked)
+
     def fileOpen(self, filePath = None):
-        file, ok = QFileDialog.getOpenFileName(
-            self,
-            "Open",
-            self.currentFileDir,
-            self.supportFileType
-        )
+        if filePath == None:
+            filePath, ok = QFileDialog.getOpenFileName(
+                self,
+                "Open",
+                self.currentFileDir,
+                self.supportFileType
+            )
+        else:
+            ok = True
+
         if ok:
-            self.currentFilePath = file
-            with open(file, 'r') as f:
+            self.currentFilePath = filePath
+            with open(filePath, 'r') as f:
                 content = f.read()
             self.ui.textEdit.setText(content)
-            self.ui.statusBar.showMessage(f"Opened: {file}")
+            self.ui.statusBar.showMessage(f"Opened: {filePath}")
+            self._fileIsSaved()
 
     def fileNew(self):
-        file, ok = QFileDialog.getSaveFileName(self, "New File", "", self.supportFileType)
+        file, ok = QFileDialog.getSaveFileName(
+            self,
+            "New File",
+            "",
+            self.supportFileType
+        )
+
         if ok:
             self.currentFilePath = file
             with open(file, 'w') as f:
@@ -233,8 +256,17 @@ class MainWindow(QMainWindow):
             """
         )
 
-    def _textChanged(self):
+    def _fileIsChanged(self):
+        """
+        文件内容发生改变
+        """
         self.isSaved = False
+    
+    def _fileIsSaved(self):
+        """
+        文件内容已经保存
+        """
+        self.isSaved = True
 
     def closeEvent(self, event):
         if self.currentFilePath:  # 如果打开了文件
@@ -275,7 +307,4 @@ class MainWindow(QMainWindow):
     def treeViewDoubleClicked(self):
         filePath = self.model.filePath(self.ui.treeView.currentIndex())
         if os.path.isfile(filePath):
-            with open(filePath, 'r') as f:
-                content = f.read()
-            self.ui.textEdit.setText(content)
-            self.currentFilePath = filePath
+            self.fileOpen(filePath)
