@@ -46,7 +46,7 @@
       </property>
       <widget class="QTreeView" name="treeView">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -57,9 +57,15 @@
          <height>0</height>
         </size>
        </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <family>终端更纱黑体-简 Nerd</family>
+         <family>微软雅黑</family>
         </font>
        </property>
        <property name="frameShape">
@@ -70,6 +76,9 @@
        </property>
        <property name="lineWidth">
         <number>0</number>
+       </property>
+       <property name="autoScrollMargin">
+        <number>16</number>
        </property>
       </widget>
       <widget class="QTextEdit" name="textEdit">
@@ -172,7 +181,7 @@
      <string>Compile</string>
     </property>
     <addaction name="compileLaTeX"/>
-    <addaction name="complileTypst"/>
+    <addaction name="compileTypst"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -384,7 +393,7 @@
     <string>LaTeX/TeX</string>
    </property>
   </action>
-  <action name="complileTypst">
+  <action name="compileTypst">
    <property name="text">
     <string>Typst</string>
    </property>
