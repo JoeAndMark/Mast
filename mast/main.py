@@ -16,9 +16,12 @@ class MainWindow(QMainWindow):
 
         self.supportFileType = "Text Files (*.txt);;Markdown Files (*.md);;LaTeX Files (*.tex);;Typst Files (*.typ)"
         
+        self.isSaved = True # 标志位，用来判断文本框中的文本是否保存，默认已经保存
+
+
         self.defaultFileDir = os.path.expanduser("~\\Documents")
-        self.currentFileDir = self.defaultFileDir
-        self.currentFilePath = None
+        self.currentFileDir = self.defaultFileDir 
+        self.currentFilePath = None # 当前文件的路径，默认没有打开文件，所以路径为 None
 
         self.model.setRootPath(self.currentFileDir)
         self.ui.treeView.setModel(self.model)
@@ -47,6 +50,8 @@ class MainWindow(QMainWindow):
         self.ui.editJumpToLineStart.triggered.connect(self.editJumpToLineStart)
         self.ui.editJumpToLineEnd.triggered.connect(self.editJumpToLineEnd)
         self.ui.editReplace.triggered.connect(self.editReplace)
+
+        self.ui.textEdit.textChanged.connect(self._textChanged)
 
         self.ui.compileLaTeX.triggered.connect(self.compileLaTeX)
         # self.ui.compileTypst.triggered.connect(self.compileTypst) # 拼写错误
@@ -77,14 +82,26 @@ class MainWindow(QMainWindow):
         self.new_window = new_window
 
     def fileSave(self):
-        if self.currentFilePath:
+        """
+        保存文件
+        """
+        if self.currentFilePath: # 如果已经打开了文件
             with open(self.currentFilePath, 'w') as f:
                 f.write(self.ui.textEdit.toPlainText())
             self.ui.statusBar.showMessage(f"Saved: {self.currentFilePath}")
-        else:
-            self.fileSaveAs()
+        else: # 如果没有打开文件
+            if self.ui.textEdit.toPlainText() == '': # 如果文本框中没有文本
+                QMessageBox.warning(self, "Warning", "No content to save.")
+                return
+            else: # 如果文本框中有文本
+                self.fileSaveAs()
+        
+        self.isSaved = True
 
     def fileSaveAs(self):
+        """
+        文件另存为
+        """
         file, ok = QFileDialog.getSaveFileName(self, "Save File As", "", self.supportFileType)
         if ok:
             self.currentFilePath = file
@@ -93,6 +110,9 @@ class MainWindow(QMainWindow):
             self.ui.statusBar.showMessage(f"Saved As: {file}")
 
     def fileOpenFolder(self):
+        """
+        打开文件夹
+        """
         folder = QFileDialog.getExistingDirectory(self, "Open Folder", self.currentFileDir)
         if folder:
             self.currentFileDir = folder
@@ -101,6 +121,9 @@ class MainWindow(QMainWindow):
             self.ui.statusBar.showMessage(f"Opened Folder: {folder}")
 
     def fileMoveTo(self):
+        """
+        文件移动
+        """
         sourceFile, ok = QFileDialog.getOpenFileName(self, "Select File", "", self.supportFileType)
         if ok:
             destinationFolder = QFileDialog.getExistingDirectory(self, "Select Destination Folder", "")
@@ -185,16 +208,55 @@ class MainWindow(QMainWindow):
     def helpAbout(self):
         QMessageBox.about(self, "About", "This is a software created by BFmHNO3.\n\nVersion: 1.0.0")
 
+    # def closeEvent(self, event):
+    #     if self.ui.textEdit.toPlainText():
+    #         reply = QMessageBox.question(
+    #             self, 'Message',
+    #             "Are you sure to quit? Any unsaved work will be lost.",
+    #             QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+    #         )
+    #         if reply == QMessageBox.Yes:
+    #             event.accept()
+    #         else:
+    #             event.ignore()
+    #     else:
+    #         event.accept()
+
+    def _textChanged(self):
+        self.isSaved = False
+
     def closeEvent(self, event):
-        if self.ui.textEdit.toPlainText():
-            reply = QMessageBox.question(
-                self, 'Message',
-                "Are you sure to quit? Any unsaved work will be lost.",
-                QMessageBox.Yes | QMessageBox.No, QMessageBox.No
-            )
-            if reply == QMessageBox.Yes:
-                event.accept()
+        if self.currentFilePath:  # 如果打开了文件
+            if not self.isSaved:  # 检查是否有未保存的更改
+                reply = QMessageBox.question(
+                    self, 'Message',
+                    "You have unsaved changes. Do you want to save before exiting?",
+                    QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+                    QMessageBox.Cancel
+                )
+                if reply == QMessageBox.Yes:
+                    self.fileSave()
+                    event.accept()
+                elif reply == QMessageBox.No:
+                    event.accept()
+                else:
+                    event.ignore()
             else:
-                event.ignore()
-        else:
-            event.accept()
+                event.accept()
+        else:  # 如果没有打开文件
+            if self.ui.textEdit.toPlainText() != '':  # 检查文本框中是否有文本
+                reply = QMessageBox.question(
+                    self, 'Message',
+                    "You have unsaved text. Do you want to save before exiting?",
+                    QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+                    QMessageBox.Cancel
+                )
+                if reply == QMessageBox.Yes:
+                    self.fileSave()
+                    event.accept()
+                elif reply == QMessageBox.No:
+                    event.accept()
+                else:
+                    event.ignore()
+            else: # 文本框中没有文本，直接退出
+                event.accept()
