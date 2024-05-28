@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         self.model = QFileSystemModel()
 
         # 设置 Splitter 控件的初始大小
-        self.ui.splitter.setSizes([200, 800])
+        self.ui.splitter.setSizes([200, 400, 400])
 
         # 与文件操作有关的全局变量
         self.supportFileType = """
@@ -49,6 +49,8 @@ class MainWindow(QMainWindow):
 
         self.connectSlot()
 
+        self.loadCustomCSS()
+
     def connectSlot(self):
         """
         连接信号与槽函数
@@ -74,7 +76,8 @@ class MainWindow(QMainWindow):
         self.ui.editJumpToLineEnd.triggered.connect(self.editJumpToLineEnd)
         self.ui.editReplace.triggered.connect(self.editReplace)
 
-        self.ui.textEdit.textChanged.connect(self._fileIsChanged)
+        self.ui.textEdit.textChanged.connect(self._fileIsChanged) # 更新标志位
+        self.ui.textEdit.textChanged.connect(self.renderMarkdown) # 实时渲染 Markdown
 
         self.ui.compileLaTeX.triggered.connect(self.compileLaTeX)
         self.ui.compileTypst.triggered.connect(self.compileTypst)
@@ -96,9 +99,12 @@ class MainWindow(QMainWindow):
 
         if ok:
             self.currentFilePath = filePath
+
             with open(filePath, 'r') as f:
                 content = f.read()
+            
             self.ui.textEdit.setText(content)
+            self.ui.webEngineView.setHtml(markdown(content))
             self.ui.statusBar.showMessage(f"Opened: {filePath}")
             self._fileIsSaved()
 
@@ -143,7 +149,12 @@ class MainWindow(QMainWindow):
         """
         文件另存为
         """
-        file, ok = QFileDialog.getSaveFileName(self, "Save File As", "", self.supportFileType)
+        file, ok = QFileDialog.getSaveFileName(
+            self,
+            "Save File As",
+            "",
+            self.supportFileType
+        )
         if ok:
             self.currentFilePath = file
             with open(file, 'w') as f:
@@ -154,7 +165,12 @@ class MainWindow(QMainWindow):
         """
         打开文件夹
         """
-        folder = QFileDialog.getExistingDirectory(self, "Open Folder", self.currentFileDir)
+        folder = QFileDialog.getExistingDirectory(
+            self,
+            "Open Folder",
+            self.currentFileDir
+        )
+
         if folder:
             self.currentFileDir = folder
             self.model.setRootPath(folder)
@@ -264,12 +280,14 @@ class MainWindow(QMainWindow):
         文件内容发生改变
         """
         self.isSaved = False
+        return self.isSaved # 返回当前文件的状态
     
     def _fileIsSaved(self):
         """
         文件内容已经保存
         """
         self.isSaved = True
+        return self.isSaved
 
     def closeEvent(self, event):
         if self.currentFilePath:  # 如果打开了文件
@@ -311,3 +329,25 @@ class MainWindow(QMainWindow):
         filePath = self.model.filePath(self.ui.treeView.currentIndex())
         if os.path.isfile(filePath):
             self.fileOpen(filePath)
+
+
+    def loadCustomCSS(self):
+        """
+        加载自定义 CSS 文件内容
+        """
+        with open("./mast/resources/themes/github.css", "r") as file:
+            self.customCSS = file.read()
+
+    def applyCSS(self, html):
+        """
+        将 CSS 样式应用于 HTML 内容
+        """
+        return f"<style>{self.customCSS}</style>" + html
+
+    def renderMarkdown(self):
+        """
+        渲染 Markdown
+        """
+        content = self.ui.textEdit.toPlainText()
+        html = markdown(content)
+        self.ui.webEngineView.setHtml(self.applyCSS(html))
