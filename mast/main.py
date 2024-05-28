@@ -14,18 +14,28 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.model = QFileSystemModel()
 
-        self.supportFileType = "Text Files (*.txt);;Markdown Files (*.md);;LaTeX Files (*.tex);;Typst Files (*.typ)"
-        
+        self.supportFileType = """
+            Text Files (*.txt);;
+            Markdown Files (*.md);;
+            LaTeX Files (*.tex);;
+            Typst Files (*.typ)
+        """
+
         self.isSaved = True # 标志位，用来判断文本框中的文本是否保存，默认已经保存
 
 
-        self.defaultFileDir = os.path.expanduser("~\\Documents")
-        self.currentFileDir = self.defaultFileDir 
+        self.defaultFileDir = os.path.expanduser("~\\Documents") # 默认文件夹
+        self.currentFileDir = self.defaultFileDir
         self.currentFilePath = None # 当前文件的路径，默认没有打开文件，所以路径为 None
 
         self.model.setRootPath(self.currentFileDir)
         self.ui.treeView.setModel(self.model)
         self.ui.treeView.setRootIndex(self.model.index(self.model.rootPath()))
+        self.ui.treeView.setColumnHidden(1, True)
+        self.ui.treeView.setColumnHidden(2, True)
+        self.ui.treeView.setColumnHidden(3, True)
+
+        self.ui.treeView.doubleClicked.connect(self.treeViewDoubleClicked)
 
         self.connectSlot()
 
@@ -58,8 +68,13 @@ class MainWindow(QMainWindow):
 
         self.ui.helpAbout.triggered.connect(self.helpAbout)
 
-    def fileOpen(self):
-        file, ok = QFileDialog.getOpenFileName(self, "Open", self.currentFileDir, self.supportFileType)
+    def fileOpen(self, filePath = None):
+        file, ok = QFileDialog.getOpenFileName(
+            self,
+            "Open",
+            self.currentFileDir,
+            self.supportFileType
+        )
         if ok:
             self.currentFilePath = file
             with open(file, 'r') as f:
@@ -206,21 +221,17 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Error", str(e))
 
     def helpAbout(self):
-        QMessageBox.about(self, "About", "This is a software created by BFmHNO3.\n\nVersion: 1.0.0")
-
-    # def closeEvent(self, event):
-    #     if self.ui.textEdit.toPlainText():
-    #         reply = QMessageBox.question(
-    #             self, 'Message',
-    #             "Are you sure to quit? Any unsaved work will be lost.",
-    #             QMessageBox.Yes | QMessageBox.No, QMessageBox.No
-    #         )
-    #         if reply == QMessageBox.Yes:
-    #             event.accept()
-    #         else:
-    #             event.ignore()
-    #     else:
-    #         event.accept()
+        QMessageBox.about(
+            self,
+            "About",
+            """
+            这是我的第一个软件。
+            我不想参加Python期末考试，所以我设计了她！
+            第一次开发软件，希望大家多多包涵！
+            版本：0.90
+            （因为今年西农建校90周年）
+            """
+        )
 
     def _textChanged(self):
         self.isSaved = False
@@ -260,3 +271,11 @@ class MainWindow(QMainWindow):
                     event.ignore()
             else: # 文本框中没有文本，直接退出
                 event.accept()
+    
+    def treeViewDoubleClicked(self):
+        filePath = self.model.filePath(self.ui.treeView.currentIndex())
+        if os.path.isfile(filePath):
+            with open(filePath, 'r') as f:
+                content = f.read()
+            self.ui.textEdit.setText(content)
+            self.currentFilePath = filePath
