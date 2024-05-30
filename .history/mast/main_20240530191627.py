@@ -8,7 +8,6 @@ import subprocess
 
 from mast.gui import Ui_MainWindow
 from markdown import markdown
-from highlighter.Markdown import MarkdownHighlighter as mdh
 
 class MainWindow(QMainWindow):
 
@@ -41,13 +40,9 @@ class MainWindow(QMainWindow):
         self.model.setRootPath(self.currentFileDir)
         self.ui.treeView.setModel(self.model)
         self.ui.treeView.setRootIndex(self.model.index(self.model.rootPath()))
-        # 隐藏不需要的栏
         self.ui.treeView.setColumnHidden(1, True)
         self.ui.treeView.setColumnHidden(2, True)
         self.ui.treeView.setColumnHidden(3, True)
-
-        # 语法高亮
-        self.hightlighter = mdh(self.ui.textEdit)
 
         # 渲染窗口
         # self.ui.webEngineView.
@@ -320,7 +315,7 @@ class MainWindow(QMainWindow):
                     QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
                     QMessageBox.Cancel
                 )
-
+                
                 if reply == QMessageBox.Yes:
                     self.fileSave()
                     event.accept()
@@ -328,7 +323,6 @@ class MainWindow(QMainWindow):
                     event.accept()
                 else:
                     event.ignore()
-            
             else: # 文本框中没有文本，直接退出
                 event.accept()
     
@@ -337,11 +331,12 @@ class MainWindow(QMainWindow):
         if os.path.isfile(filePath):
             self.fileOpen(filePath)
 
+
     def loadCustomCSS(self):
         """
         加载自定义 CSS 文件内容
         """
-        with open("./mast/resources/themes/test.css", "r") as file:
+        with open("./mast/resources/themes/github.css", "r") as file:
             self.customCSS = file.read()
 
     def applyCSS(self, html):
