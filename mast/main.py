@@ -315,6 +315,7 @@ class MainWindow(QMainWindow):
                     QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
                     QMessageBox.Cancel
                 )
+
                 if reply == QMessageBox.Yes:
                     self.fileSave()
                     event.accept()
@@ -322,6 +323,7 @@ class MainWindow(QMainWindow):
                     event.accept()
                 else:
                     event.ignore()
+            
             else: # 文本框中没有文本，直接退出
                 event.accept()
     
