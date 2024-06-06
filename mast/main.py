@@ -1,13 +1,24 @@
-from PySide6.QtCore import QDir, QUrl
-from PySide6.QtWidgets import *
-from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument, QCloseEvent
+"""
+模块名称：main.py
+模块描述：本模块为主窗口模块，提供了主窗口的实现。
+作者：JoeAndMark
+版本：1.0
+日期：2024-5-1
+"""
 
+# 导入标准库
 import os
 import shutil
 import subprocess
 
-from mast.gui import Ui_MainWindow
+# 导入第三方库
+from PySide6.QtCore import QDir, QUrl
+from PySide6.QtWidgets import *
+from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument, QCloseEvent
 from markdown import markdown
+
+# 导入自定义库
+from mast.gui import Ui_MainWindow
 from highlighter.Markdown import MarkdownHighlighter as mdh
 
 class MainWindow(QMainWindow):
@@ -124,7 +135,7 @@ class MainWindow(QMainWindow):
         file, ok = QFileDialog.getSaveFileName(
             self,
             "New File",
-            "",
+            self.defaultFileDir,
             self.supportFileType
         )
 
