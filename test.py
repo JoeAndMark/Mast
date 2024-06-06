@@ -1,70 +1,79 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
+import os
+import markdown
+from markdown.extensions import Extension
+from markdown.preprocessors import Preprocessor
+import re
+from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtWebEngineWidgets import QWebEngineView
+import sys
+
+class EChartsExtension(Extension):
+    def extendMarkdown(self, md):
+        md.preprocessors.register(EChartsPreprocessor(md), 'echarts', 175)
+
+class EChartsPreprocessor(Preprocessor):
+    ECHARTS_RE = re.compile(r'```echarts\s+(.*?)\s+```', re.DOTALL)
+
+    def run(self, lines):
+        text = "\n".join(lines)
+        while True:
+            m = self.ECHARTS_RE.search(text)
+            if not m:
+                break
+            chart_code = m.group(1)
+            chart_id = f"echarts_{hash(chart_code)}"
+            chart_div = f'<div id="{chart_id}" style="width: 600px; height: 400px;"></div>'
+            chart_script = f'''
+            <script type="text/javascript">
+                var chart = echarts.init(document.getElementById('{chart_id}'));
+                var option = {chart_code};
+                chart.setOption(option);
+            </script>
+            '''
+            replacement = chart_div + chart_script
+            text = text[:m.start()] + replacement + text[m.end():]
+        return text.split("\n")
+
+def markdown_to_html(md_text):
+    md = markdown.Markdown(extensions=[EChartsExtension()])
+    return md.convert(md_text)
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, html_content):
         super().__init__()
+        self.setWindowTitle('ECharts Example')
 
-        self.setWindowTitle("Echarts in PySide6")
-        self.resize(800, 600)
+        # Create QWebEngineView
+        self.browser = QWebEngineView()
+        self.setCentralWidget(self.browser)
 
-        # 创建 QWebEngineView
-        self.webview = QWebEngineView()
-
-        # 创建主窗口的布局
-        central_widget = QWidget()
-        layout = QVBoxLayout(central_widget)
-        layout.addWidget(self.webview)
-
-        self.setCentralWidget(central_widget)
-
-        # 加载 Echarts 图表
-        self.load_chart()
-
-    def load_chart(self):
-        # 准备 HTML 内容
-        html_content = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <script src="file:///E:\Downloads\GitRepo\Github\Python\GUI\PySide\Mast\libs\echarts\echarts.min.js"></script>
-        </head>
-        <body>
-            <div id="main" style="width: 600px;height:400px;"></div>
-            <script type="text/javascript">
-                var myChart = echarts.init(document.getElementById('main'));
-                var option = {
-                    title: {
-                        text: 'ECharts example'
-                    },
-                    tooltip: {},
-                    legend: {
-                        data:['Sales']
-                    },
-                    xAxis: {
-                        data: ["Shirt","Cardign","Chiffon Shirt","Pants","Heels","Socks"]
-                    },
-                    yAxis: {},
-                    series: [{
-                        name: 'Sales',
-                        type: 'bar',
-                        data: [5, 20, 36, 10, 10, 20]
-                    }]
-                };
-                myChart.setOption(option);
-            </script>
-        </body>
-        </html>
-        """
-
-        # 在 QWebEngineView 中加载 HTML 内容
-        self.webview.setHtml(html_content)
+        # Load HTML content
+        self.browser.setHtml(html_content)
 
 if __name__ == '__main__':
-    app = QApplication([])
+    app = QApplication(sys.argv)
 
-    window = MainWindow()
+    # Read the markdown content
+    with open('example.md', 'r', encoding='utf-8') as file:
+        md_content = file.read()
+
+    # Convert markdown to HTML with ECharts
+    html_content = f'''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ECharts Example</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.1/echarts.min.js"></script>
+    </head>
+    <body>
+        {markdown_to_html(md_content)}
+    </body>
+    </html>
+    '''
+
+    # Create and show the main window
+    window = MainWindow(html_content)
     window.show()
 
-    app.exec()
+    sys.exit(app.exec())
