@@ -64,9 +64,6 @@ class MainWindow(QMainWindow):
         # 语法高亮
         self.hightlighter = mdh(self.ui.textEdit)
 
-        # 渲染窗口
-        # self.ui.webEngineView.
-
         self.connectSlot()
 
         self.loadCustomCSS()
@@ -381,7 +378,7 @@ class MainWindow(QMainWindow):
         """
         将 HTML 内容插入模板
         """
-        with open("template.html", "r") as file:
+        with open("./mast/resources/templates/template.html", "r") as file:
             template = file.read()
 
         # 添加自定义 CSS 到模板中的 <style> 标签
