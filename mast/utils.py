@@ -18,24 +18,28 @@ from PySide6.QtGui import QCloseEvent
 
 
 class FileHandler:
-    def __init__(self):
-        # 支持的文件类型
-        self.supportFileType = """
+    def __init__(self, textEdit, statusBar = None):
+        # 需要维护的常量
+        ## 支持的文件类型
+        self.SUPPORT_FILE_TYPE = """
             Text Files (*.txt);;
             Markdown Files (*.md);;
             LaTeX Files (*.tex);;
             Typst Files (*.typ)
         """
+        ## 默认文件夹
+        self.DEFAULT_FILE_DIR = os.path.expanduser("~\\Documents")
+
+        self._textEdit = textEdit
+        self._statusBar = statusBar
 
         # 标志位，用来判断文本框中的文本是否保存，默认已经保存
-        self.isSaved = True
+        self._isSaved = True
 
-        # 默认文件夹
-        self.defaultFileDir = os.path.expanduser("~\\Documents")
         # 当前文件夹
-        self.currentFileDir = self.defaultFileDir
+        self._currentFileDir = self.DEFAULT_FILE_DIR
         # 当前文件的路径，默认没有打开文件，所以路径为 None
-        self.currentFilePath = None
+        self._currentFilePath = None
 
     def readFile(self):
         """
@@ -50,32 +54,27 @@ class FileHandler:
         return content
 
 
-    def fileOpen(self, filePath = None, statusBar = None):
+    def fileOpen(self):
         """
         打开文件，此函数不对文件进行操作，只更新currentFilePath的值。
         同时将isSaved标志位设置为True，表示默认情况下文件已保存。
-        Args:
-            filePath: 默认为None，适用于通过菜单栏的打开按钮打开文件
-                    当需要传入值时，意味着通过文件树双击打开文件
         Returns:
             返回打开文件的路径和状态
         """
-        if filePath == None: # 通过打开按钮打开文件
-            filePath, ok = QFileDialog.getOpenFileName(
-                self,
-                "打开",
-                self.currentFileDir,
-                self.supportFileType
-            )
-        else: # 通过文件树双击打开文件
-            ok = True
+        filePath, ok = QFileDialog.getOpenFileName(
+            self,
+            "打开",
+            self.currentFileDir,
+            self.SUPPORT_FILE_TYPE
+        )
 
         if ok:
-            self.currentFilePath = filePath # 更新当前文件路径
+            self._updateCurrentFileDir(filePath) # 更新当前文件路径
             self._updateFileState(True) # 打开的文件默认已保存
 
-            if statusBar != None:
-                statusBar.showMessage(f"已打开: {filePath}")
+            if self._statusBar != None:
+                self._statusBar.showMessage(f"已打开: {filePath}")
+
         return self._getCurrentFilePath(), self._getFileState()
 
     def fileNew(self, textEdit, statusBar = None):
@@ -92,7 +91,7 @@ class FileHandler:
             self,
             "新建",
             "",
-            self.supportFileType
+            self.SUPPORT_FILE_TYPE
         )
 
         if ok:
@@ -154,8 +153,8 @@ class FileHandler:
         file, ok = QFileDialog.getSaveFileName(
             self,
             "另存为",
-            self.defaultFileDir,
-            self.supportFileType
+            self.DEFAULT_FILE_DIR,
+            self.SUPPORT_FILE_TYPE
         )
 
         if ok:
