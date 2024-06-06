@@ -1,0 +1,36 @@
+body {
+    font-family: 楷体, arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    padding: 30px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: red;
+    font-family: 楷体;
+}
+
+code {
+    background-color: gray;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+pre {
+    background-color: #f8f8f8;
+    border: 1px solid #cccccc;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+pre code,
+pre tt {
+    background-color: transparent;
+    border: none;
+}

@@ -90,8 +90,8 @@
        </property>
        <property name="font">
         <font>
-         <family>终端更纱黑体-简 Nerd</family>
-         <pointsize>14</pointsize>
+         <family>Consolas</family>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <property name="frameShape">
