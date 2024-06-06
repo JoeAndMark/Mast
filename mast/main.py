@@ -113,7 +113,10 @@ class MainWindow(QMainWindow):
                 content = f.read()
             
             self.ui.textEdit.setText(content)
-            self.ui.webEngineView.setHtml(markdown(content))
+
+            self.renderMarkdown()
+            # self.ui.webEngineView.setHtml(markdown(content))
+
             self.ui.statusBar.showMessage(f"Opened: {filePath}")
             self._fileIsSaved()
 
@@ -356,29 +359,25 @@ class MainWindow(QMainWindow):
         """
         加载自定义 CSS 文件内容
         """
-        with open("./mast/resources/themes/test.css", "r") as file:
-            self.customCSS = file.read()
+        css_path = "./mast/resources/themes/test.css"
+        if os.path.exists(css_path):
+            with open(css_path, "r") as file:
+                self.customCSS = file.read()
+        else:
+            self.customCSS = ""
 
-    def applyCSS(self, html):
+    def applyTemplate(self, html):
         """
-        将 CSS 样式应用于 HTML 内容，并添加 KaTeX 的 CSS 和 JS
+        将 HTML 内容插入模板
         """
-        katex_css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">'
-        katex_js = '<script src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>'
-        auto_render_js = '<script src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"></script>'
-        render_script = """
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                renderMathInElement(document.body, {
-                    delimiters: [
-                        {left: "$$", right: "$$", display: true},
-                        {left: "$", right: "$", display: false}
-                    ]
-                });
-            });
-        </script>
-        """
-        return f"<style>{self.customCSS}</style>{katex_css}{katex_js}{auto_render_js}{render_script}" + html
+        with open("template.html", "r") as file:
+            template = file.read()
+
+        # 添加自定义 CSS 到模板中的 <style> 标签
+        template = template.replace("/* Add custom CSS here */", self.customCSS)
+
+        # 插入渲染后的 HTML 内容
+        return template.replace("{content}", html)
 
     def renderMarkdown(self):
         """
@@ -393,5 +392,5 @@ class MainWindow(QMainWindow):
         ]
 
         content = self.ui.textEdit.toPlainText()
-        html = markdown.markdown(content, extensions=extensions)
-        self.ui.webEngineView.setHtml(self.applyCSS(html))
+        html = markdown(content, extensions=extensions)
+        self.ui.webEngineView.setHtml(self.applyTemplate(html))

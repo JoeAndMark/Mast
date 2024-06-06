@@ -1,59 +1,70 @@
-import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        super(MainWindow, self).__init__()
+        super().__init__()
 
-        # Set up the main window
-        self.setWindowTitle("KaTeX Renderer")
-        self.setGeometry(200, 200, 800, 600)
+        self.setWindowTitle("Echarts in PySide6")
+        self.resize(800, 600)
 
-        # Create a central widget and layout
+        # 创建 QWebEngineView
+        self.webview = QWebEngineView()
+
+        # 创建主窗口的布局
         central_widget = QWidget()
-        layout = QVBoxLayout()
-        central_widget.setLayout(layout)
+        layout = QVBoxLayout(central_widget)
+        layout.addWidget(self.webview)
+
         self.setCentralWidget(central_widget)
 
-        # Create a QWebEngineView instance
-        self.web_view = QWebEngineView()
-        layout.addWidget(self.web_view)
+        # 加载 Echarts 图表
+        self.load_chart()
 
-        # HTML content with KaTeX rendering
+    def load_chart(self):
+        # 准备 HTML 内容
         html_content = """
         <!DOCTYPE html>
         <html>
         <head>
-            <meta charset="utf-8">
-            <title>KaTeX Example</title>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
-            <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"></script>
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    renderMathInElement(document.body, {
-                        delimiters: [
-                            {left: "$$", right: "$$", display: true},
-                            {left: "$", right: "$", display: false}
-                        ]
-                    });
-                });
-            </script>
+            <meta charset="UTF-8">
+            <script src="file:///E:\Downloads\GitRepo\Github\Python\GUI\PySide\Mast\libs\echarts\echarts.min.js"></script>
         </head>
         <body>
-            <h1>KaTeX Rendering Example</h1>
-            <p>This is an inline formula: $E = mc^2$</p>
-            <p>This is a block formula: $$\\int_0^\\infty x^2 dx$$</p>
+            <div id="main" style="width: 600px;height:400px;"></div>
+            <script type="text/javascript">
+                var myChart = echarts.init(document.getElementById('main'));
+                var option = {
+                    title: {
+                        text: 'ECharts example'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['Sales']
+                    },
+                    xAxis: {
+                        data: ["Shirt","Cardign","Chiffon Shirt","Pants","Heels","Socks"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: 'Sales',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 10, 20]
+                    }]
+                };
+                myChart.setOption(option);
+            </script>
         </body>
         </html>
         """
 
-        # Set the HTML content to the QWebEngineView
-        self.web_view.setHtml(html_content)
+        # 在 QWebEngineView 中加载 HTML 内容
+        self.webview.setHtml(html_content)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
+if __name__ == '__main__':
+    app = QApplication([])
+
     window = MainWindow()
     window.show()
-    sys.exit(app.exec())
+
+    app.exec()

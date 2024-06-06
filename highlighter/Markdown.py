@@ -31,7 +31,7 @@ class MarkdownHighlighter(QSyntaxHighlighter):
         self.parent.setTabStopDistance(self.parent.fontMetrics().horizontalAdvance(' ') * 8)
 
         self.defaultTheme = {
-            "background-color": "#d7d7d7",
+            "background-color": "white",
             "color": "#191970",
             "bold": {"color": "#859900", "font-weight": "bold", "font-style": "normal"},
             "emphasis": {"color": "#b58900", "font-weight": "bold", "font-style": "italic"},
