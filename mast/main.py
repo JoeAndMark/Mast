@@ -400,7 +400,6 @@ class MainWindow(QMainWindow):
             'fenced_code', # 代码块
             'footnotes', # 脚注
             'attr_list', # 允许在块级元素和内联元素上添加属性
-            'nl2br', # 将换行符转换为 <br> 标签
             'sane_lists' # 改进列表处理
         ]
 
