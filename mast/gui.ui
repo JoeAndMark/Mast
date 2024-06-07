@@ -126,7 +126,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>文件(&amp;F)</string>
     </property>
     <addaction name="fileNew"/>
     <addaction name="fileNewWindow"/>
@@ -142,11 +142,14 @@
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>编辑(&amp;E)</string>
     </property>
     <widget class="QMenu" name="menuSelection">
+     <property name="toolTip">
+      <string>选择对文本的操作</string>
+     </property>
      <property name="title">
-      <string>Selection</string>
+      <string>选择</string>
      </property>
      <addaction name="editSelectAll"/>
      <addaction name="separator"/>
@@ -158,9 +161,9 @@
      <addaction name="editJumpToLineEnd"/>
      <addaction name="separator"/>
     </widget>
-    <widget class="QMenu" name="menuFind_and_Replace">
+    <widget class="QMenu" name="menuFindAndReplace">
      <property name="title">
-      <string>Find and Replace</string>
+      <string>查找和替换</string>
      </property>
      <addaction name="editFind"/>
      <addaction name="editFindNext"/>
@@ -177,18 +180,18 @@
     <addaction name="separator"/>
     <addaction name="menuSelection"/>
     <addaction name="separator"/>
-    <addaction name="menuFind_and_Replace"/>
+    <addaction name="menuFindAndReplace"/>
    </widget>
    <widget class="QMenu" name="menuCompile">
     <property name="title">
-     <string>Compile</string>
+     <string>编译(&amp;C)</string>
     </property>
     <addaction name="compileLaTeX"/>
     <addaction name="compileTypst"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>帮助(&amp;H)</string>
     </property>
     <addaction name="helpAbout"/>
    </widget>
@@ -200,10 +203,10 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="fileNew">
    <property name="text">
-    <string>New</string>
+    <string>新建</string>
    </property>
    <property name="toolTip">
-    <string>Create new file.</string>
+    <string>创建一个新的文件</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -211,7 +214,13 @@
   </action>
   <action name="fileNewWindow">
    <property name="text">
-    <string>New Window</string>
+    <string>新建窗口</string>
+   </property>
+   <property name="iconText">
+    <string>新建窗口</string>
+   </property>
+   <property name="toolTip">
+    <string>打开一个新的窗口</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>
@@ -219,7 +228,10 @@
   </action>
   <action name="fileOpen">
    <property name="text">
-    <string>Open</string>
+    <string>打开</string>
+   </property>
+   <property name="toolTip">
+    <string>打开指定文件</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -227,10 +239,10 @@
   </action>
   <action name="fileOpenFolder">
    <property name="text">
-    <string>Open Folder</string>
+    <string>打开文件夹</string>
    </property>
    <property name="toolTip">
-    <string>Open a Folder instead of file.</string>
+    <string>打开一个指定的文件夹</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+O</string>
@@ -238,12 +250,15 @@
   </action>
   <action name="fileOpenRecent">
    <property name="text">
-    <string>Open Recent</string>
+    <string>打开最近文件</string>
    </property>
   </action>
   <action name="fileSave">
    <property name="text">
-    <string>Save</string>
+    <string>保存</string>
+   </property>
+   <property name="toolTip">
+    <string>保存文件更改或创建一个新的文件</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -251,7 +266,10 @@
   </action>
   <action name="fileSaveAs">
    <property name="text">
-    <string>Save As</string>
+    <string>另存为</string>
+   </property>
+   <property name="toolTip">
+    <string>将文件另存到指定路径或指定格式</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -259,7 +277,10 @@
   </action>
   <action name="fileMoveTo">
    <property name="text">
-    <string>Move To</string>
+    <string>移动到</string>
+   </property>
+   <property name="toolTip">
+    <string>将文件移动到指定的位置</string>
    </property>
   </action>
   <action name="actionSave_All">
@@ -269,7 +290,10 @@
   </action>
   <action name="editUndo">
    <property name="text">
-    <string>Undo</string>
+    <string>撤销</string>
+   </property>
+   <property name="toolTip">
+    <string>撤销上一次操作</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
@@ -277,7 +301,10 @@
   </action>
   <action name="editRedo">
    <property name="text">
-    <string>Redo</string>
+    <string>重做</string>
+   </property>
+   <property name="toolTip">
+    <string>恢复上一次操作</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
@@ -285,7 +312,10 @@
   </action>
   <action name="editCut">
    <property name="text">
-    <string>Cut</string>
+    <string>剪切</string>
+   </property>
+   <property name="toolTip">
+    <string>剪切选中的文本</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
@@ -293,7 +323,10 @@
   </action>
   <action name="editCopy">
    <property name="text">
-    <string>Copy</string>
+    <string>复制</string>
+   </property>
+   <property name="toolTip">
+    <string>复制选中的文本</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
@@ -301,7 +334,10 @@
   </action>
   <action name="editPaste">
    <property name="text">
-    <string>Paste</string>
+    <string>粘贴</string>
+   </property>
+   <property name="toolTip">
+    <string>粘贴剪贴板中的文本</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
@@ -309,7 +345,10 @@
   </action>
   <action name="editSelectAll">
    <property name="text">
-    <string>Select All</string>
+    <string>全选</string>
+   </property>
+   <property name="toolTip">
+    <string>选择全部文本</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
@@ -317,7 +356,7 @@
   </action>
   <action name="editJumpToTop">
    <property name="text">
-    <string>Jump to Top</string>
+    <string>跳转到文首</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Home</string>
@@ -325,7 +364,7 @@
   </action>
   <action name="editJumpToSelection">
    <property name="text">
-    <string>Jump to Selection</string>
+    <string>跳转到所选内容</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+J</string>
@@ -333,7 +372,7 @@
   </action>
   <action name="editJumpToBottom">
    <property name="text">
-    <string>Jump to Bottom</string>
+    <string>跳转到文末</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+End</string>
@@ -341,12 +380,12 @@
   </action>
   <action name="editJumpToLineStart">
    <property name="text">
-    <string>Jump to Line Start</string>
+    <string>跳转到行首</string>
    </property>
   </action>
   <action name="editJumpToLineEnd">
    <property name="text">
-    <string>Jump to Line End</string>
+    <string>跳转到行末</string>
    </property>
   </action>
   <action name="actionFind_and_Replace">
@@ -356,7 +395,7 @@
   </action>
   <action name="editFind">
    <property name="text">
-    <string>Find</string>
+    <string>查找</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
@@ -364,7 +403,7 @@
   </action>
   <action name="editFindNext">
    <property name="text">
-    <string>Find Next</string>
+    <string>查找下一个</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Right</string>
@@ -372,7 +411,7 @@
   </action>
   <action name="editFindPrevious">
    <property name="text">
-    <string>Find Previous</string>
+    <string>查找上一个</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Left</string>
@@ -380,7 +419,7 @@
   </action>
   <action name="editReplace">
    <property name="text">
-    <string>Replace</string>
+    <string>替换</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -388,7 +427,7 @@
   </action>
   <action name="helpAbout">
    <property name="text">
-    <string>About</string>
+    <string>关于</string>
    </property>
   </action>
   <action name="compileLaTeX">

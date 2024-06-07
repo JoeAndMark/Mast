@@ -43,10 +43,11 @@ def main():
         pyFilePath = dir + f'\\{pyFile}'
         uiFilePath = dir + f'\\{uiFile}'
         cmd = f'pyside6-uic.exe -o {pyFilePath} {uiFilePath}'
+        print(cmd) # 如果终端报错，就复制一下命令手动执行。不知道为什么……
         try:
             os.system(cmd)
         except OSError as e:
-            print(f"Failed to convert {uiFile}: {e}")
+            print(f"转换失败: {uiFile} 到 {e}")
 
 
 if __name__ == '__main__':
