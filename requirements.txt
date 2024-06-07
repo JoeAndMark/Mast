@@ -1,4 +1,3 @@
 PySide6
 markdown
 pygments
-python-markdown-math
