@@ -4,10 +4,21 @@
 作者：JoeAndMark
 时间：2024-5-1
 """
-
+# 导入标准库
 import os
 import os.path
 
+# 导入第三方库
+
+
+# 导入自定义库
+
+class Converter:
+    """
+    先留着，事情有点多，以后再写……
+    """
+    def __init__(self):
+        pass
 
 def currentDir():
     dir = os.getcwd()
@@ -44,7 +55,7 @@ def main():
         pyFilePath = dir + f'\\{pyFile}'
         uiFilePath = dir + f'\\{uiFile}'
         cmd = f'pyside6-uic.exe -o {pyFilePath} {uiFilePath}'
-        print(cmd) # 如果终端报错，就复制一下命令手动执行。不知道为什么……
+        print(cmd) # 如果终端报错，就复制一下命令手动执行。更新了一次vscode就出了bug，不知道为什么……
         try:
             os.system(cmd)
         except OSError as e:

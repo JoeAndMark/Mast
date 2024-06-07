@@ -1,6 +1,20 @@
+"""
+模块名称：highlighter.py
+模块描述：代码编辑区，即文本框，实现语法高亮功能
+作者：JoeAndMark
+时间：2024-5-1
+其他：MarkdownHighlighter 基于项目 https://github.com/rupeshk/MarkdownHighlighter 修改而来，感谢大佬！
+"""
+
+# 导入标准库
 import re
+
+# 导入第三方库
 from PySide6.QtGui import QBrush, QSyntaxHighlighter, QTextCharFormat, QColor, QPalette, QFont, QTextCursor, QTextLayout
 from PySide6.QtWidgets import QTextEdit
+
+# 导入自定义库
+
 
 class MarkdownHighlighter(QSyntaxHighlighter):
 

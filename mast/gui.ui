@@ -22,6 +22,10 @@
   <property name="windowTitle">
    <string>Mast</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>resources/icons/mast.ico</normaloff>resources/icons/mast.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
