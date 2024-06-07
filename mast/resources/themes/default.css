@@ -1,0 +1,317 @@
+body {
+    font-family: '宋体', 'Times New Roman', serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    padding: 30px;
+}
+
+/* 标题样式 */
+/* 标题样式 */
+h1 {
+    color: #1E90FF; /* DodgerBlue */
+    font-family: 黑体, 'SimHei';
+    font-size: 24px; /* 一级标题字号 */
+    text-align: center; /* 居中 */
+    margin: 20px 0; /* 上下间距 */
+}
+
+h2 {
+    color: #32CD32; /* LimeGreen */
+    font-family: 宋体, 'SimSun';
+    font-size: 20px; /* 二级标题字号 */
+    text-align: left; /* 左对齐 */
+    margin: 18px 0; /* 上下间距 */
+}
+
+h3 {
+    color: #FF8C00; /* DarkOrange */
+    font-family: 宋体, 'SimSun';
+    font-size: 16px; /* 三级标题字号 */
+    text-align: left; /* 左对齐 */
+    margin: 16px 0; /* 上下间距 */
+}
+
+h4 {
+    color: #FF1493; /* DeepPink */
+    font-family: 楷体, 'KaiTi';
+    font-size: 14px; /* 四级标题字号 */
+    text-align: left; /* 左对齐 */
+    margin: 14px 0; /* 上下间距 */
+}
+
+h5 {
+    color: #8A2BE2; /* BlueViolet */
+    font-family: 楷体, 'KaiTi';
+    font-size: 12px; /* 五级标题字号 */
+    text-align: left; /* 左对齐 */
+    margin: 12px 0; /* 上下间距 */
+}
+
+h6 {
+    color: #FF4500; /* OrangeRed */
+    font-family: 楷体, 'KaiTi';
+    font-size: 10px; /* 六级标题字号 */
+    text-align: left; /* 左对齐 */
+    margin: 10px 0; /* 上下间距 */
+}
+
+/* 列表样式 */
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding-left: 2em;
+}
+ul ul, ol ul, ul ol, ol ol {
+    margin: 0;
+}
+
+/* 表格样式，三线表 */
+table {
+    border-collapse: collapse; /* 合并表格内外边框 */
+    width: 100%;
+    margin-bottom: 1em;
+    border: none;
+    text-align: center; /* 表格内容居中显示 */
+}
+
+table th, table td {
+    border: none; 
+    padding: 6px 13px; /* 单元格内边距 */
+    text-align: center; /* 单元格内容居中显示 */
+}
+
+table thead th {
+    border-bottom: 1px solid #000; /* 表头底部线 */
+}
+
+table thead tr {
+    border-top: 2px solid #000; /* 表头顶部线 */
+}
+
+table tbody tr:last-child td {
+    border-bottom: 2px solid #000; /* 表格底部线 */
+}
+
+/* 可选：设置奇偶行背景色以提高可读性 */
+table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+
+/* 引用样式 */
+blockquote {
+    margin: 0 0 1em;
+    padding: 0.5em 10px;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    background-color: #f6f8fa;
+}
+
+/* 代码样式 */
+code, pre {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+code {
+    background-color: gray;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+pre {
+    background-color: #f8f8f8;
+    border: 1px solid #cccccc;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+pre code,
+pre tt {
+    background-color: transparent;
+    border: none;
+}
+
+pre {
+    line-height: 125%;
+    font-size: 14px;
+}
+
+td.linenos .normal {
+    color: inherit;
+    background-color: transparent;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+span.linenos {
+    color: inherit;
+    background-color: transparent;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+td.linenos .special {
+    color: #000000;
+    background-color: #ffffc0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+span.linenos.special {
+    color: #000000;
+    background-color: #ffffc0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.codehilite .hll {
+    background-color: #ffffcc;
+}
+.codehilite {
+    background: #f8f8f8;
+}
+.codehilite .c {
+    color: #3d7b7b;
+    font-style: italic;
+} /* Comment */
+.codehilite .err {
+    border: 1px solid #ff0000;
+} /* Error */
+.codehilite .k {
+    color: #008000;
+    font-weight: bold;
+} /* Keyword */
+.codehilite .o {
+    color: #666666;
+} /* Operator */
+.codehilite .ch {
+    color: #3d7b7b;
+    font-style: italic;
+} /* Comment.Hashbang */
+.codehilite .cm {
+    color: #3d7b7b;
+    font-style: italic;
+} /* Comment.Multiline */
+.codehilite .cp {
+    color: #9c6500;
+} /* Comment.Preproc */
+.codehilite .cpf {
+    color: #3d7b7b;
+    font-style: italic;
+} /* Comment.PreprocFile */
+.codehilite .c1 {
+    color: #3d7b7b;
+    font-style: italic;
+} /* Comment.Single */
+.codehilite .cs {
+    color: #3d7b7b;
+    font-style: italic;
+} /* Comment.Special */
+.codehilite .gd {
+    color: #a00000;
+} /* Generic.Deleted */
+.codehilite .ge {
+    font-style: italic;
+} /* Generic.Emph */
+.codehilite .ges {
+    font-weight: bold;
+    font-style: italic;
+} /* Generic.EmphStrong */
+.codehilite .gr {
+    color: #e40000;
+} /* Generic.Error */
+.codehilite .gh {
+    color: #000080;
+    font-weight: bold;
+} /* Generic.Heading */
+.codehilite .gi {
+    color: #008400;
+} /* Generic.Inserted */
+.codehilite .go {
+    color: #717171;
+} /* Generic.Output */
+.codehilite .gp {
+    color: #000080;
+    font-weight: bold;
+} /* Generic.Prompt */
+.codehilite .gs {
+    font-weight: bold;
+} /* Generic.Strong */
+.codehilite .gu {
+    color: #800080;
+    font-weight: bold;
+} /* Generic.Subheading */
+.codehilite .gt {
+    color: #0044dd;
+} /* Generic.Traceback */
+.codehilite .kc {
+    color: #008000;
+    font-weight: bold;
+} /* Keyword.Constant */
+.codehilite .kd {
+    color: #008000;
+    font-weight: bold;
+} /* Keyword.Declaration */
+.codehilite .kn {
+    color: #008000;
+    font-weight: bold;
+} /* Keyword.Namespace */
+.codehilite .kp {
+    color: #008000;
+} /* Keyword.Pseudo */
+.codehilite .kr {
+    color: #008000;
+    font-weight: bold;
+} /* Keyword.Reserved */
+.codehilite .kt {
+    color: #b00040;
+} /* Keyword.Type */
+.codehilite .m {
+    color: #666666;
+} /* Literal.Number */
+.codehilite .s {
+    color: #ba2121;
+} /* Literal.String */
+.codehilite .na {
+    color: #687822;
+} /* Name.Attribute */
+.codehilite .nb {
+    color: #008000;
+} /* Name.Builtin */
+.codehilite .nc {
+    color: #0000ff;
+    font-weight: bold;
+} /* Name.Class */
+.codehilite .no {
+    color: #880000;
+} /* Name.Constant */
+.codehilite .nd {
+    color: #aa22ff;
+} /* Name.Decorator */
+.codehilite .ni {
+    color: #717171;
+    font-weight: bold;
+} /* Name.Entity */
+.codehilite .ne {
+    color: #cb3f38;
+    font-weight: bold;
+} /* Name.Exception */
+.codehilite .nf {
+    color: #0000ff;
+} /* Name.Function */
+.codehilite .nl {
+    color: #767600;
+} /* Name.Label */
+.codehilite .nn {
+    color: #0000ff;
+    font-weight: bold;
+} /* Name.Namespace */
+.codehilite .nt {
+    color: #008000;
+    font-weight: bold;
+} /* Name.Tag */
+.codehilite .nv {
+    color: #19177c;
+} /* Name.Variable */
