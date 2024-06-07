@@ -9,10 +9,12 @@
 # 导入标准库
 import os
 import shutil
+import subprocess
 
 # 导入第三方库
-from PySide6.QtWidgets import QFileDialog, QMessageBox
+from PySide6.QtWidgets import QFileDialog, QMessageBox, QInputDialog
 from PySide6.QtGui import QCloseEvent
+from PySide6.QtGui import QTextCharFormat, QColor, QTextCursor, QTextDocument
 
 # 导入自定义库
 
@@ -305,10 +307,100 @@ class FileHandler:
 
 
 class EditHandler:
-    def __init__(self):
-        pass
+    def __init__(self, textEdit):
+        self.textEdit = textEdit
 
+    def editFind(self):
+        text, ok = QInputDialog.getText(self, 'Find', 'Enter text:')
+        if ok and text:
+            cursor = self.ui.textEdit.textCursor()
+            format = QTextCharFormat()
+            format.setBackground(QColor('yellow'))
+            cursor.setCharFormat(format)
+            start_pos = 0
+            while self.ui.textEdit.find(text, start_pos, QTextDocument.FindFlags()):
+                extra_selections = []
+                selection = QTextEdit.ExtraSelection()
+                selection.format.setBackground(QColor('yellow'))
+                selection.cursor = self.ui.textEdit.textCursor()
+                extra_selections.append(selection)
+                self.ui.textEdit.setExtraSelections(extra_selections)
+                start_pos = self.ui.textEdit.textCursor().position()
+
+    def editReplace(self):
+        cursor = self.ui.textEdit.textCursor()
+        if cursor.hasSelection():
+            text, ok = QInputDialog.getText(self, 'Replace Text', 'Enter new text:')
+            if ok:
+                cursor.insertText(text)
+                self.ui.textEdit.setTextCursor(cursor)
+
+    def editJumpToTop(self):
+        self.ui.textEdit.moveCursor(QTextCursor.Start)
+
+    def editJumpToBottom(self):
+        self.ui.textEdit.moveCursor(QTextCursor.End)
+
+    def editJumpToSelection(self):
+        cursor = self.ui.textEdit.textCursor()
+        if cursor.hasSelection():
+            start_pos = cursor.selectionStart()
+            cursor.setPosition(start_pos)
+            self.ui.textEdit.setTextCursor(cursor)
+    
+    def editJumpToLineStart(self):
+        self.ui.textEdit.moveCursor(QTextCursor.StartOfLine)
+
+    def editJumpToLineEnd(self):
+        self.ui.textEdit.moveCursor(QTextCursor.EndOfLine)
 
 class CompileHandler:
+    def __init__(self, fileHandler):
+        self.fileHandler = fileHandler
+
+    def compileLaTeX(self):
+        if not self.currentFilePath or not self.currentFilePath.endswith('.tex'):
+            QMessageBox.warning(self, "Warning", "The file is not a LaTeX file.")
+            return
+        
+        directory, file = os.path.split(self.currentFilePath)
+        command = ['pdflatex', '-interaction=nonstopmode', file]
+
+        try:
+            process = subprocess.Popen(command, cwd=directory)
+            process.wait()
+            self.ui.statusBar.showMessage(f"Compiled LaTeX: {file}")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
+
+    def compileTypst(self):
+        if not self.currentFilePath or not self.currentFilePath.endswith('.typ'):
+            QMessageBox.warning(self, "Warning", "The file is not a Typst file.")
+            return
+        
+        directory, file = os.path.split(self.currentFilePath)
+        command = ['typst', 'compile', file]
+
+        try:
+            process = subprocess.Popen(command, cwd=directory)
+            process.wait()
+            self.ui.statusBar.showMessage(f"Compiled Typst: {file}")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
+
+class HelpHandler:
     def __init__(self):
-        pass
+        self._version = 0.90 # 版本号，因为今年母校建校90周年，所以版本号从0.90开始
+        self._website = "https://github.com/JoeAndMark/Mast"
+        self._email = "bfmhno3@outlook.com"
+    def helpAbout(self):
+        QMessageBox.about(
+            self,
+            "About",
+            """
+            这是我的第一个软件。
+            我不想参加Python期末考试，所以我设计了她！
+            第一次开发软件，希望大家多多包涵！
+            版本：0.90
+            """
+        )

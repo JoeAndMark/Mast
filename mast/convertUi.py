@@ -1,7 +1,8 @@
 """
-convertUi.py
-
-This modules provides functionality for converting a batch .ui files. 
+模块名称：convertUi.py
+模块描述：将 .ui 文件转换为 .py 文件，实现操作逻辑和界面的分离。可以批量进行转换。
+作者：JoeAndMark
+时间：2024-5-1
 """
 
 import os
@@ -16,7 +17,7 @@ def currentDir():
     return dir
 
 
-# List all .ui files at current directory.
+# 列出当前文件下所有 .ui 文件
 def listUiFile():
     lst = []
     dir = currentDir()
@@ -28,12 +29,12 @@ def listUiFile():
     return lst
 
 
-# rename .ui files
+# 重命名 .ui 文件
 def transPyFile(filename):
     return os.path.splitext(filename)[0] + '.py'
 
 
-# translate .ui to .py
+# 将 .ui 文件转换为 .py 文件
 def main():
     list = listUiFile()
     dir = currentDir()

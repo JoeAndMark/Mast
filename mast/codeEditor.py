@@ -1,3 +1,10 @@
+"""
+模块名称：codeEditor.py
+模块描述：自定义代码编辑器模块，具有行号显示和高亮当前行的功能。
+模块作者：JoeAndMark
+时间：2024-6-1
+"""
+
 from PySide6.QtCore import Qt, QRect
 from PySide6.QtGui import QFont, QColor, QPainter, QTextFormat
 from PySide6.QtWidgets import QWidget, QPlainTextEdit, QApplication, QTextEdit
