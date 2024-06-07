@@ -19,26 +19,28 @@
 <p align="center">
     <img src="./README/base.png" width="70%">
 </p>
-
-<center>Markdown 基本语法测试</center>
+<p align="center">
+    Markdown 基本语法测试
+</p>
 
 
 
 <p align="center">
     <img src="./README/code.png" width="70%"
 </p>
-
-<center>
+<p align="center">
     语法高亮测试
-</center>
+</p>
+
+
 
 <p align="center">
     <img src="./README/formule.png" width="70%">
 </p>
+<p align="center">
+    公式渲染测试
+</p>
 
-<center>
-    LaTeX 渲染测试
-</center>
 
 ## 如何使用
 
