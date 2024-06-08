@@ -4,9 +4,13 @@
 作者：JoeAndMark
 时间：2024-5-1
 """
-
+# 导入标准库
 import sys
+
+# 导入第三方库
 from PySide6.QtWidgets import QApplication
+
+# 导入自定义库
 from mast.main import MainWindow
 
 
