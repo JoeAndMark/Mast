@@ -10,6 +10,8 @@
 import os
 import sys
 
+sys.path.append("..")
+
 # 导入第三方库
 from PySide6.QtCore import QDir, QUrl
 from PySide6.QtWidgets import *

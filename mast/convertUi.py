@@ -55,7 +55,7 @@ def main():
         pyFilePath = dir + f'\\{pyFile}'
         uiFilePath = dir + f'\\{uiFile}'
         cmd = f'pyside6-uic.exe -o {pyFilePath} {uiFilePath}'
-        print(cmd) # 如果终端报错，就复制一下命令手动执行。更新了一次vscode就出了bug，不知道为什么……
+        print(cmd) # 如果终端报错，就复制一下命令手动执行。
         try:
             os.system(cmd)
         except OSError as e:

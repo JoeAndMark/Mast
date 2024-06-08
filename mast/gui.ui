@@ -24,7 +24,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>resources/icons/mast.ico</normaloff>resources/icons/mast.ico</iconset>
+    <normaloff>C:/Users/john/.designer/backup/resources/icons/mast.ico</normaloff>C:/Users/john/.designer/backup/resources/icons/mast.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -206,6 +206,10 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="fileNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileNew.svg</normaloff>resources/icons/fileNew.svg</iconset>
+   </property>
    <property name="text">
     <string>新建</string>
    </property>
@@ -217,6 +221,10 @@
    </property>
   </action>
   <action name="fileNewWindow">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileNewWindow.svg</normaloff>resources/icons/fileNewWindow.svg</iconset>
+   </property>
    <property name="text">
     <string>新建窗口</string>
    </property>
@@ -231,6 +239,10 @@
    </property>
   </action>
   <action name="fileOpen">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileOpen.svg</normaloff>resources/icons/fileOpen.svg</iconset>
+   </property>
    <property name="text">
     <string>打开</string>
    </property>
@@ -242,6 +254,10 @@
    </property>
   </action>
   <action name="fileOpenFolder">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileOpenFolder.svg</normaloff>resources/icons/fileOpenFolder.svg</iconset>
+   </property>
    <property name="text">
     <string>打开文件夹</string>
    </property>
@@ -253,11 +269,19 @@
    </property>
   </action>
   <action name="fileOpenRecent">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileOpenRecent.svg</normaloff>resources/icons/fileOpenRecent.svg</iconset>
+   </property>
    <property name="text">
     <string>打开最近文件</string>
    </property>
   </action>
   <action name="fileSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileSave.svg</normaloff>resources/icons/fileSave.svg</iconset>
+   </property>
    <property name="text">
     <string>保存</string>
    </property>
@@ -269,6 +293,10 @@
    </property>
   </action>
   <action name="fileSaveAs">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileSaveAs.svg</normaloff>resources/icons/fileSaveAs.svg</iconset>
+   </property>
    <property name="text">
     <string>另存为</string>
    </property>
@@ -280,6 +308,10 @@
    </property>
   </action>
   <action name="fileMoveTo">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/fileMoveTo.svg</normaloff>resources/icons/fileMoveTo.svg</iconset>
+   </property>
    <property name="text">
     <string>移动到</string>
    </property>
@@ -293,6 +325,10 @@
    </property>
   </action>
   <action name="editUndo">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editUndo.svg</normaloff>resources/icons/editUndo.svg</iconset>
+   </property>
    <property name="text">
     <string>撤销</string>
    </property>
@@ -304,6 +340,10 @@
    </property>
   </action>
   <action name="editRedo">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editRedo.svg</normaloff>resources/icons/editRedo.svg</iconset>
+   </property>
    <property name="text">
     <string>重做</string>
    </property>
@@ -315,6 +355,10 @@
    </property>
   </action>
   <action name="editCut">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editCut.svg</normaloff>resources/icons/editCut.svg</iconset>
+   </property>
    <property name="text">
     <string>剪切</string>
    </property>
@@ -326,6 +370,10 @@
    </property>
   </action>
   <action name="editCopy">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editCopy.svg</normaloff>resources/icons/editCopy.svg</iconset>
+   </property>
    <property name="text">
     <string>复制</string>
    </property>
@@ -337,6 +385,10 @@
    </property>
   </action>
   <action name="editPaste">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editPaste.svg</normaloff>resources/icons/editPaste.svg</iconset>
+   </property>
    <property name="text">
     <string>粘贴</string>
    </property>
@@ -348,6 +400,10 @@
    </property>
   </action>
   <action name="editSelectAll">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editSelectAll.svg</normaloff>resources/icons/editSelectAll.svg</iconset>
+   </property>
    <property name="text">
     <string>全选</string>
    </property>
@@ -398,6 +454,10 @@
    </property>
   </action>
   <action name="editFind">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editFind.svg</normaloff>resources/icons/editFind.svg</iconset>
+   </property>
    <property name="text">
     <string>查找</string>
    </property>
@@ -422,6 +482,10 @@
    </property>
   </action>
   <action name="editReplace">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/editReplace.svg</normaloff>resources/icons/editReplace.svg</iconset>
+   </property>
    <property name="text">
     <string>替换</string>
    </property>
@@ -430,16 +494,28 @@
    </property>
   </action>
   <action name="helpAbout">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/helpAbout.svg</normaloff>resources/icons/helpAbout.svg</iconset>
+   </property>
    <property name="text">
     <string>关于</string>
    </property>
   </action>
   <action name="compileLaTeX">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/compileLaTeX.svg</normaloff>resources/icons/compileLaTeX.svg</iconset>
+   </property>
    <property name="text">
     <string>LaTeX/TeX</string>
    </property>
   </action>
   <action name="compileTypst">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/compileTypst.svg</normaloff>resources/icons/compileTypst.svg</iconset>
+   </property>
    <property name="text">
     <string>Typst</string>
    </property>
