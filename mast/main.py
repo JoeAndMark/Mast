@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         self.model = QFileSystemModel()
 
         # 设置 Splitter 控件的初始大小
-        self.ui.splitter.setSizes([0, 600, 400])
+        self.ui.splitter.setSizes([50, 550, 400])
 
         # 与文件操作有关的全局变量
         ## 支持的文件类型
@@ -103,16 +103,13 @@ class MainWindow(QMainWindow):
 
         self.ui.treeView.doubleClicked.connect(self.treeViewDoubleClicked)
 
-    def fileOpen(self, filePath = None):
-        if filePath == None:
-            filePath, ok = QFileDialog.getOpenFileName(
-                self,
-                "打开",
-                self.currentFileDir,
-                self.supportFileType
-            )
-        else:
-            ok = True
+    def fileOpen(self):
+        filePath, ok = QFileDialog.getOpenFileName(
+            self,
+            "打开",
+            self.currentFileDir,
+            self.supportFileType
+        )
 
         if ok:
             self.currentFilePath = filePath
@@ -131,7 +128,7 @@ class MainWindow(QMainWindow):
     def fileNew(self):
         file, ok = QFileDialog.getSaveFileName(
             self,
-            "New File",
+            "新建",
             self.defaultFileDir,
             self.supportFileType
         )
@@ -361,7 +358,18 @@ class MainWindow(QMainWindow):
         filePath = self.model.filePath(self.ui.treeView.currentIndex())
         if os.path.isfile(filePath): # 进行文件操作
             self._notSaveWarning()
-            self.fileOpen(filePath)
+            self.currentFilePath = filePath
+
+            with open(filePath, 'r') as f:
+                content = f.read()
+            
+            self.ui.textEdit.setText(content)
+
+            self.renderMarkdown()
+            # self.ui.webEngineView.setHtml(markdown(content))
+
+            self.ui.statusBar.showMessage(f"Opened: {filePath}")
+            self._fileIsSaved()
 
     def loadCustomCSS(self):
         """
