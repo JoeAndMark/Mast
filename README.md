@@ -72,7 +72,7 @@ python app.py
 使用如下命令进行打包：
 
 ```bash
-pyinstaller -D -i "mast.ico" Mast
+pyinstaller -D -i "mast.ico" app.py -n Mast
 ```
 
 ## 项目架构
