@@ -11,11 +11,13 @@ import os
 import shutil
 import subprocess
 
+
 # 导入第三方库
 from PySide6.QtCore import QDir, QUrl
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor, QTextDocument, QCloseEvent
 from markdown import markdown
+
 
 # 导入自定义库
 from mast.gui import Ui_MainWindow
